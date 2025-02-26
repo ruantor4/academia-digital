@@ -13,6 +13,9 @@ import projeto.dio.academia_digital.service.IAlunoService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class AlunoServiceImpl implements IAlunoService {
@@ -33,8 +36,10 @@ public class AlunoServiceImpl implements IAlunoService {
 
   @Override
   public Aluno get(Long id) {
-    return alunoRepository.getById(id);
-  }
+		return alunoRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com o ID: " + id));
+	}
+
 
   @Override
   public List<Aluno> getAll(String dataDeNascimento) {
@@ -49,17 +54,29 @@ public class AlunoServiceImpl implements IAlunoService {
   }
 
   @Override
-  public Aluno update(Long id, AlunoUpdateForm formUpdate) {
-    return null;
+  public Aluno update(Long id, AlunoUpdateForm form) {
+      Optional<Aluno> alunoDb = alunoRepository.findById(id);
+      if(alunoDb.isEmpty()){
+        throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
+      }
+      Aluno alunoExistente = alunoDb.get();
+
+      if (form.getNome() != null) {
+        alunoExistente.setNome(form.getNome());
+        alunoExistente.setBairro(form.getBairro());
+        alunoExistente.setDataDeNascimento(form.getDataDeNascimento());
+      }
+       
+    return alunoRepository.save(alunoExistente);
   }
 
   @Override
   public void delete(Long id) {
-    Aluno aluno = alunoRepository.getById(id);
-    if(id != null){
-      alunoRepository.delete(aluno);
-    }
-  }
+    if (!alunoRepository.existsById(id)) {
+			throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
+		}
+		alunoRepository.deleteById(id);
+	}
 
   @Override
   public List<AvaliacaoFisica> getAllAvaliacaoFisicaId(Long id) {
@@ -70,6 +87,6 @@ public class AlunoServiceImpl implements IAlunoService {
 
   }
 
- 
+  
 
 }
