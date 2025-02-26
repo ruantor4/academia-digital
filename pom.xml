@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	   <!-- Definição da versão do modelo POM utilizado -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Definição do projeto pai, utilizado para herdar configurações e versões de dependências do Spring Boot -->
+    <parent>
+        <!-- Identificação do grupo e artefato do projeto pai -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.7</version>
+        <!-- Caminho relativo para o POM pai -->
+        <relativePath />
+    </parent>
+	
+	<groupId>projeto.dio</groupId>
+	<artifactId>academia-digital</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- Nome do projeto -->
+	<name>academia-digital</name>
+
+	<!-- Descrição do projeto -->
+	<description>Tutorial API RESTful modelando sistema de academia de ginástica</description>
+	
+	 <properties>
+        <!-- Definição da versão do Java a ser utilizada no projeto -->
+        <java.version>17</java.version>
+		 <!-- Definição da versão do OpenAPI para documentação da API -->
+        <openapi.version>1.5.10</openapi.version>
+	</properties>
+
+	
+    <dependencies>
+        <!-- Dependência para suporte a JPA (Java Persistence API), usado para persistência de dados -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Dependência para iniciar uma aplicação web utilizando Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.5.15</version> <!-- Definição da versão específica do Starter Web -->
+        </dependency>
+        
+        <!-- Dependencias para fazer validaçoes  -->
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- Dependência do Lombok, que gera automaticamente métodos como getters, setters e construtores -->
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope> <!-- Indica que o Lombok não precisa ser empacotado no JAR final -->
+        </dependency>
+		
+		<!-- Dependência do banco de dados H2 (um banco em memória utilizado para testes ou desenvolvimento) 
+       <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope> <!- Indica que a dependência será usada em tempo de execução 
+            <version>2.2.220</version>
+        </dependency>-->
+		<!-- Dependência do banco de dados Postgres -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+		<!-- Dependência para integração com o OpenAPI, permitindo gerar a documentação da API -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${openapi.version}</version> <!-- Usando a variável para manter a versão do OpenAPI -->
+        </dependency>
+
+		<!-- Dependência para testes, usada para executar os testes unitários e de integração -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope> <!-- Indica que a dependência é apenas para o escopo de testes -->
+        </dependency>
+    </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
