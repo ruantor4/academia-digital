@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -21,6 +22,7 @@ public class AlunoForm {
 
   @NotEmpty(message = "Preencha o campo corretamente.")
   @CPF(message = "'${validatedValue}' é inválido!")
+  @Column(unique = true)
   private String cpf;
 
   @NotEmpty(message = "Preencha o campo corretamente.")

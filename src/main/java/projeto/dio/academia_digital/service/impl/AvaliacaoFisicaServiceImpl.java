@@ -13,6 +13,8 @@ import projeto.dio.academia_digital.service.IAvaliacaoFisicaService;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class AvaliacaoFisicaServiceImpl implements IAvaliacaoFisicaService {
 
@@ -36,22 +38,32 @@ public class AvaliacaoFisicaServiceImpl implements IAvaliacaoFisicaService {
 
   @Override
   public AvaliacaoFisica get(Long id) {
-    return null;
+    return avaliacaoFisicaRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException("Usuario não encontrado com o ID: " + id));
+
   }
 
+  
+  @Override
+  public AvaliacaoFisica update(Long id, AvaliacaoFisicaUpdateForm formUpdate) {
+    AvaliacaoFisica avalicaoFisica = avaliacaoFisicaRepository.getById(id);
+    avalicaoFisica.setPeso(formUpdate.getPeso());
+    avalicaoFisica.setAltura(formUpdate.getPeso());
+    return avaliacaoFisicaRepository.save(avalicaoFisica);
+  }
+
+  @Override
+  public void delete(Long id) { 
+  if (!avaliacaoFisicaRepository.existsById(id)) {
+    throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id); 
+  }
+  avaliacaoFisicaRepository.deleteById(id);
+  }
+  
   @Override
   public List<AvaliacaoFisica> getAll() {
 
     return avaliacaoFisicaRepository.findAll();
   }
 
-  @Override
-  public AvaliacaoFisica update(Long id, AvaliacaoFisicaUpdateForm formUpdate) {
-    return null;
-  }
-
-  @Override
-  public void delete(Long id) {
-
-  }
 }

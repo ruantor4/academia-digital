@@ -31,10 +31,16 @@ public class AlunoController {
   private AlunoServiceImpl alunoService;
 
   @GetMapping("/{id}")
-  public ResponseEntity<Aluno> getAluno(@PathVariable Long id){
+  public ResponseEntity<Aluno> getAluno(@PathVariable Long id) {
     return ResponseEntity.ok(alunoService.get(id));
   }
-  
+
+  @GetMapping
+  public ResponseEntity<List<Aluno>> getAll(
+      @RequestParam(value = "dataDeNascimento", required = false) String dataDeNacimento) {
+    return ResponseEntity.ok(alunoService.getAll(dataDeNacimento));
+  }
+
   @PostMapping
   public ResponseEntity<Aluno> create(@Valid @RequestBody AlunoForm form) {
     Aluno alunoSave = alunoService.create(form);
@@ -47,39 +53,29 @@ public class AlunoController {
     return ResponseEntity.ok(alunoService.getAllAvaliacaoFisicaId(id));
   }
 
-  @GetMapping
-  public ResponseEntity<List<Aluno>> getAll(@RequestParam(value = "dataDeNascimento", required = false) String dataDeNacimento) {
-    return ResponseEntity.ok(alunoService.getAll(dataDeNacimento));
-  }
-
-  
   @PutMapping("/{id}")
-  public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody AlunoUpdateForm form){
+  public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
     try {
       Aluno alunoUp = alunoService.update(id, form);
       return ResponseEntity.ok(alunoUp);
 
     } catch (EntityNotFoundException e) {
-      
+
       return ResponseEntity.notFound().build();
     }
 
   }
 
-   @DeleteMapping("/{id}")
-   public ResponseEntity<Void> delete(@PathVariable Long id){
-        try {
-            alunoService.delete(id);
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    try {
+      alunoService.delete(id);
+      return ResponseEntity.noContent().build(); // Retorna 204 No Content
 
-        } catch (EntityNotFoundException e) {
+    } catch (EntityNotFoundException e) {
 
-            return ResponseEntity.notFound().build(); // Retorna 404 se o usuário não for encontrado
-        }
+      return ResponseEntity.notFound().build(); // Retorna 404 se o usuário não for encontrado
+    }
   }
 
-    
-  }
-  
-
-
+}

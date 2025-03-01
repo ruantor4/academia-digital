@@ -12,6 +12,8 @@ import projeto.dio.academia_digital.service.IMatriculaService;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class MatriculaServiceImpl implements IMatriculaService {
 

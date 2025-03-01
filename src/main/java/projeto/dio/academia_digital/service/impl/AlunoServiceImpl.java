@@ -72,10 +72,16 @@ public class AlunoServiceImpl implements IAlunoService {
 
   @Override
   public void delete(Long id) {
-    if (!alunoRepository.existsById(id)) {
-			throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
+    if (id == null) {
+			throw new IllegalArgumentException("O ID não pode ser nulo");
 		}
-		alunoRepository.deleteById(id);
+    boolean exists = alunoRepository.existsById(id);
+		System.out.println("ID " + id + " existe? " + exists);;
+
+    if(!exists){
+      throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
+    }
+    alunoRepository.deleteById(id);
 	}
 
   @Override

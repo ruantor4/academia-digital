@@ -60,15 +60,15 @@
             <scope>provided</scope> <!-- Indica que o Lombok não precisa ser empacotado no JAR final -->
         </dependency>
 		
-		<!-- Dependência do banco de dados H2 (um banco em memória utilizado para testes ou desenvolvimento) 
+		<!-- Dependência do banco de dados H2 (um banco em memória utilizado para testes ou desenvolvimento) -->
        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope> <!- Indica que a dependência será usada em tempo de execução 
+            <scope>runtime</scope> 
             <version>2.2.220</version>
-        </dependency>-->
+        </dependency> 
 		<!-- Dependência do banco de dados Postgres -->
-        <dependency>
+       <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
